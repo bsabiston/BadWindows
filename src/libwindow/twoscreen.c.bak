@@ -229,46 +229,6 @@ ReadLocII(locator, screen, a, b, p)     /* v 1.0b */
 }
 
 
-ReadLocIII(locator, screen, a, b, p, average)     /* v 1.0b */
-     int locator, *a, *b, average;
-     float *p;
-     struct OutDev *screen;
-{
-  int valid, side = 0, button,aa = 0,bb=0,i;
-  float fx, fy, fz,pp = 0.0;
-
-  if (average) {
-    *a = *b = *p = 0;
-    for (i = 0; i < average; i++)
-      {
-	button = ReadAll(locator, &aa, &bb, &pp);
-	*a += aa;
-	*b += bb;
-	*p += pp;
-      }
-    *a = (int)((float)*a/ (float)average);
-    *b = (int)((float)*b/ (float)average);
-    *p = (float)((float)*p/ (float)average);
-  }
-  else button = ReadAll(locator, a, b, p);
-
-  if (screen&&Output2)
-    {
-      if (*a > Output2->viswidth)
-        {
-          *a -= Output2->viswidth;
-          side = 0;
-        }
-      else side = 1;
-
-      if ((screen == Output1) && (side)) *a = 0;
-      else if ((screen == Output2) && (!side)) *a = screen->viswidth;
-    }
-
-  return (button);
-}
-
-
 
 MoverII(W, M, bits)     /* v 1.0b */
      struct Window *W, *M;

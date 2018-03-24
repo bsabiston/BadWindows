@@ -1,7 +1,7 @@
 /*******************************************************************************************/
 /*                                                                                         */
-/*  This is colorcode.c. Following are the utilities to create a contrast lookup table     */
-/*  for a multi_color code. This look up table is used to perform lightness contrast       */
+/*  This colorcode.c. Following are the utilities to create a contrast lookup table        */
+/*  for a 6-color color code. This look up table is used to perform lightness contrast     */
 /*  adaptation in dynamic mapping environments                                             */
 /*                                                                                         */
 /*  Didier Bardon, October 13, 1990                                                        */
@@ -26,7 +26,7 @@
 #define SAT_NUM 3
 #define LITE_NUM 6
 
-extern struct Window *currenttest;
+extern struct Window *root, *currenttest;
 
 extern int CurrentRed, CurrentGreen, CurrentBlue;
 extern float CurrentHue, CurrentSat, CurrentVal;
@@ -167,7 +167,7 @@ struct Window *parent;
     
     T = (struct colorcodestruct *) read_color_code_table (path);
 
-/*    print_color_code_table (T); */
+    print_color_code_table (T); 
 
     free (input_string);
   }
@@ -237,14 +237,13 @@ struct Window *parent;
   }
 
 
-  for (i = 0 ; i < num_colors ; i++) {
-    printf( "\nSaving contrast value %d: %f", i, **(table + i));
+  for (i = 0 ; i < num_colors ; i++)
     if (fwrite ((char *) *(table + i), sizeof (float), NUM_CONTRASTS, fp) != (NUM_CONTRASTS)) 
       { 
 	printf ("\nsave_color_table() colorcode.c .......5th fwrite statement failed  .......path: %s", path); 
 	return(0);
       }      
-  }
+
   fclose (fp);
 
   return(1);
@@ -301,7 +300,7 @@ char *name;
 
   color_code_table->table = (float **) malloc (sizeof (float *) * color_code_table->num_colors);
 
-  for (i = 0 ; i < color_code_table->num_colors ; i++) {
+  for (i = 0 ; i < color_code_table->num_colors ; i++) { 
     *(color_code_table->table + i) = (float *) malloc (sizeof (float) * NUM_CONTRASTS);
     fread ((char *) *(color_code_table->table + i), sizeof (float), NUM_CONTRASTS, fp);
   }
@@ -309,11 +308,11 @@ char *name;
   fclose (fp);
 
   printf("\nDone Reading Table: %s\n", path);
-
+  printf( "\nHE! OUI!");
   print_color_code_table( (struct colorcodestruct *) color_code_table);
-
+  printf( "\nEH! BIEN, OH!!");
   set_adapt_color_table ((struct colorcodestruct *) color_code_table);
-
+  printf( "\nALORS QUOI!!!");
   return ((struct colorcodestruct *) color_code_table);
 }
 

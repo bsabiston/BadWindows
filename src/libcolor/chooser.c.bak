@@ -317,12 +317,11 @@ Save_Chooser(pad)
   cstruct = mstruct->current;
 
   strcpy(string,cstruct->name);
-/*
   if (FileBrowser(PaletteBrowser,string,"",500,500,string))
     {
-*/
-  if( GetString2( pad->parent->parent, E_lastx, E_lasty, "Enter palette filename. (full path)", string, 150)) 
+/*  if( GetString2( pad->parent->parent, E_lastx, E_lasty, "Enter palette filename. (full path)", string, 150)) 
     {
+*/
       printf("saving at %s\n",string);
       Save_Chooser_Internal( pad, string);
       strcpy(cstruct->name,string);
@@ -528,9 +527,9 @@ struct Window *pad;
 int append;
 {
   char string[200];
-  if (GetString(pad->parent->parent, E_lastx,E_lasty,"Enter palette filename. (full path)",string,150)) 
+/*  if (GetString(pad->parent->parent, E_lastx,E_lasty,"Enter palette filename. (full path)",string,150)) */
 
-/*   if (FileBrowser(PaletteBrowser,default_palette_directory,"",500,500,string)) */
+   if (FileBrowser(PaletteBrowser,default_palette_directory,"",500,500,string))
     {
       strcpy(default_palette_directory,string);
       Read_Chooser(string,pad,append);
